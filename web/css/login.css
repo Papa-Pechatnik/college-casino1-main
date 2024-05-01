@@ -1,0 +1,126 @@
+.wrapper {
+  display: none;
+  position: absolute;
+  box-sizing: border-box; /*---------------------------------- ось добавив ---------------*/
+  width: clamp(18.75rem, 6.25rem + 62.5vw, 31.25rem); /*---------------------------------- ось добавив ---------------*/
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  color: white;
+  border-radius: 10px;
+  padding: clamp(0.625rem, -1.1932rem + 9.091vh, 1.875rem) clamp(1rem, -1.1818rem + 10.909vw, 2.5rem);
+}
+
+/*------Додав ----------------*/
+.wrapper-form {
+display: flex;
+flex-direction: column;
+row-gap: 16px;
+}
+
+.wrapper h1 {
+  font-size: 36px;
+  line-height: normal;
+  text-align: center;
+  margin: 0; /*----------------------*/
+}
+
+.wrapper p {
+  margin: 0; /*----------------------*/
+}
+
+.wrapper .input-box {
+  position: relative;
+  height: clamp(2rem, 0.3636rem + 8.182vw, 3.125rem); /*----------------------*/
+  margin: clamp(0rem, -2.60008rem + 10.667vh, 1rem) 0;/*----------------------*/
+}
+
+.input-box input {
+  width: calc(100% - 40px);
+  max-width: calc(100% - 40px);
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: "Bebas Neue";
+}
+
+.input-box input::placeholder {
+  color: white;
+}
+
+.input-box i {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+}
+
+.forgot {
+  text-align: center;
+  /* margin: 15px 0; --------------------------------------------------*/
+}
+.forgot a {
+  color: white;
+  text-decoration: none;
+}
+.forgot:hover {
+  text-decoration: underline;
+}
+.wrapper .btn {
+  width: 100%;
+  height: 45px;
+  background: white;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 16px;
+  color: black;
+  font-weight: 600;
+  font-family: "Bebas Neue";
+}
+
+.wrapper .register-link {
+  font-size: 14.5px;
+  text-align: center;
+  /* margin: 20px 0 15px; -------------------------------- */
+}
+
+.register-link p button { /*тег заменил на button*/
+  color: white;
+  text-decoration: none;
+  font-weight: inherit;
+  font-family: inherit; /*---------------------------------- ось добавив ---------------*/
+  font-size: inherit; /*---------------------------------- ось добавив ---------------*/
+  background: none; /*---------------------------------- ось добавив ---------------*/
+  outline: none; /*---------------------------------- ось добавив ---------------*/
+  border: none;/*---------------------------------- ось добавив ---------------*/
+  padding: 0 6px; /*---------------------------------- ось добавив ---------------*/
+}
+
+.register-link p button:hover { /*тег заменил на button*/
+  text-decoration: underline;
+}
+
+/*---------------------------------- ось добавив ---------------*/
+@media screen and (max-height: 575.98px) {
+  .wrapper {
+    bottom: 0;
+  }
+
+  .logo-img {
+    width: 32px;
+    height: 32px;
+  }
+}

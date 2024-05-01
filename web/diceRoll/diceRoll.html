@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roll</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        /* body {
+            height: 100vh;
+            background: linear-gradient(darkgreen, lightgreen) 0 100% no-repeat;
+            background-size: 100% 50%;
+        } */
+
+        .container {
+            width: 400px;
+            padding: 50px;
+            border: 1px solid black;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            background-color: white;
+            box-shadow: 0 5px 35px rgba(50, 50, 50, 0.2);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .dice-wrapper {
+            width: 90%;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        p {
+            font-size: 16px;
+            margin: 30px 0;
+            font-weight: 500;
+        }
+
+        .roll-dice {
+            background-color: green;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 15px 0;
+            width: 150px;
+            letter-spacing: 1px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .shake {
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: rotate(8deg);
+            }
+
+            50% {
+                transform: rotate(-8deg);
+            }
+
+            100% {
+                transform: rotate(8deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="dice-wrapper">
+            <img id="die-1">
+            <img id="die-2">
+        </div>
+        <p id="total"></p>
+        <p id="result"></p>
+        <input type="number" id="bet" placeholder="Bet amount" min="1" max="balance">
+        <input type="number" id="input" placeholder="The number that comes up" min="2" max="12"
+            onkeypress="return false">
+        <button id="btn" class="roll-dice">Roll the Dice</button>
+        <span id="balance-user">Balance: </span>
+    </div>
+
+    <script type="module" src="../js/play_zone_form.js"></script>
+    <script>
+        let balance = parseFloat(localStorage.getItem("balance")) || 0;
+        document.getElementById("bet").setAttribute("max", balance.toFixed(2))
+        document.querySelector("#balance-user").innerHTML = "Your balance is: " + balance;
+        let rollBtn = document.getElementsByClassName("roll-dice")[0];
+        rollBtn.addEventListener("click", function () {
+            roll();
+        });
+        let imgs = [
+            "dice-01.svg",
+            "dice-02.svg",
+            "dice-03.svg",
+            "dice-04.svg",
+            "dice-05.svg",
+            "dice-06.svg",
+        ];
+
+        let dice = document.querySelectorAll("img");
+
+        let sum = 0;
+
+        //let btn = document.getElementById("btn");
+
+        function roll() {
+            let inputValue = document.getElementById("input").value;
+            let betValue = document.getElementById("bet").value;
+            if (inputValue === "") {
+                alert("Please enter number");
+                return;
+            } else if (betValue > balance) {
+                alert("Not enough money");
+                return;
+            }
+
+            dice.forEach(function (die) {
+                die.classList.add("shake");
+            });
+            setTimeout(function () {
+                dice.forEach(function (die) {
+                    die.classList.remove("shake");
+                });
+                let dieOneValue = Math.floor(Math.random() * 6);
+                let dieTwoValue = Math.floor(Math.random() * 6);
+                document.querySelector("#die-1").setAttribute("src", "../diceRoll/" + imgs[dieOneValue]);
+                document.querySelector("#die-2").setAttribute("src", "../diceRoll/" + imgs[dieTwoValue]);
+                sum = (dieOneValue + 1) + (dieTwoValue + 1);
+                document.querySelector("#result").innerHTML = "";
+                document.querySelector("#total").innerHTML = "Your score is " + sum;
+                checkResult();
+            }, 1000);
+        }
+
+
+
+        function checkResult() {
+            let inputValue = document.getElementById("input").value;
+
+            let betValue = parseFloat(document.getElementById("bet").value);
+
+            if (inputValue == sum) {
+                document.querySelector("#result").innerHTML = "You won";
+                balance = balance + (betValue * 2);
+                localStorage.setItem("balance", balance);
+                document.querySelector("#balance-user").innerHTML = "Your balance is: " + balance.toFixed(2);
+            } else if (inputValue != sum) {
+                balance -= betValue;
+                localStorage.setItem("balance", balance);
+                document.querySelector("#balance-user").innerHTML = "Your balance is: " + balance.toFixed(2);
+            } else {
+                document.querySelector("#result").innerHTML = "You loose";
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
